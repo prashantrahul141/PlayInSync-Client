@@ -47,7 +47,7 @@ const playHandler = (e: Event) => {
 
   if (file_input.files !== null && file_input.files[0] !== undefined) {
     const objectUrl = URL.createObjectURL(file_input.files[0]);
-    videoPlayer.style.display = 'block';
+    videoPlayerDiv.style.display = 'block';
     videoPlayer.src = objectUrl;
     file_div.style.display = 'none';
   }

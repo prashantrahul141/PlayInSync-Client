@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PlayInSync | Watch</title>
+    <link rel="stylesheet" href="./styles/index.css" />
   </head>
   <body>
     <div id="file-div">
@@ -16,11 +17,10 @@
         <button class="submit" id="play">Sync</button>
       </div>
     </div>
-    <div id="video-player-div">
-      <video id="video-player" controls></video>
+    <div id="video-div">
+      <video id="video-player" controls autoplay></video>
     </div>
   </body>
-  <link rel="stylesheet" href="./styles/index.css" />
   <script src="./lib/fetcher.js"></script>
   <script src="./lib/eventHandlers.js"></script>
   <script src="./index.js"></script>
