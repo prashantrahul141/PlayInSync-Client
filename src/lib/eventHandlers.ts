@@ -1,5 +1,5 @@
 let CLIENTHASH: any;
-let fileName: string;
+let fileName: string | null;
 
 const connectHandler = async () => {
   urlInput.disabled = true;
@@ -10,23 +10,16 @@ const connectHandler = async () => {
     const response = await connectHandlerFetcher();
     if (response['response']['state'] === 'Success') {
       // When Response is recieved from server.
-      urlInput.classList.remove('failure');
-      connectButton.classList.remove('failure');
-      urlInput.classList.add('success');
-      connectButton.classList.add('success');
 
       CLIENTHASH = response['clientHash'];
       if (response['response']['file'] !== 'None') {
         fileName = response['response']['file'];
-        file_text.innerText += ` ${fileName}`;
+        localStorage.setItem('FILENAME', fileName || 'None');
       }
-
-      file_div.style.display = 'block';
+      localStorage.setItem('CLIENTHASH', CLIENTHASH);
+      window.location.href = './watch.html';
     } else if (response['response']['state'] === 'Failure') {
       // Server didnt respond.
-      urlInput.classList.add('failure');
-      connectButton.classList.add('failure');
-
       urlInput.disabled = false;
       connectButton.disabled = false;
 
@@ -34,9 +27,6 @@ const connectHandler = async () => {
     }
   } else {
     // invalid url
-    urlInput.classList.add('failure');
-    connectButton.classList.add('failure');
-
     urlInput.disabled = false;
     connectButton.disabled = false;
 
@@ -44,6 +34,21 @@ const connectHandler = async () => {
   }
 };
 
+const onLoadWatch = () => {
+  CLIENTHASH = localStorage.getItem('CLIENTHASH');
+  fileName = localStorage.getItem('FILENAME');
+  if (fileName !== 'None') {
+    file_text.innerText += ` ${fileName}`;
+  }
+};
+
 const playHandler = (e: Event) => {
   e.preventDefault();
+
+  if (file_input.files !== null && file_input.files[0] !== undefined) {
+    const objectUrl = URL.createObjectURL(file_input.files[0]);
+    videoPlayer.style.display = 'block';
+    videoPlayer.src = objectUrl;
+    file_div.style.display = 'none';
+  }
 };
