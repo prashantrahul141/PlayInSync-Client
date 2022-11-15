@@ -1,4 +1,5 @@
 let CLIENTHASH: any;
+let fileName: string;
 
 const connectHandler = async () => {
   urlInput.disabled = true;
@@ -16,7 +17,8 @@ const connectHandler = async () => {
 
       CLIENTHASH = response['clientHash'];
       if (response['response']['file'] !== 'None') {
-        file_text.innerText += ` ${response['response']['file']}`;
+        fileName = response['response']['file'];
+        file_text.innerText += ` ${fileName}`;
       }
 
       file_div.style.display = 'block';
@@ -40,4 +42,8 @@ const connectHandler = async () => {
 
     alert('Please enter a valid Server URL first.');
   }
+};
+
+const playHandler = (e: Event) => {
+  e.preventDefault();
 };
