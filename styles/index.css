@@ -51,10 +51,6 @@ body {
   outline: 0.5pt solid rgba(163, 163, 196, 0.8);
   background-color: rgb(50, 52, 72);
 }
-#link-input:disabled {
-  outline: 0.5pt solid rgb(94, 218, 94);
-  color: rgb(94, 218, 94);
-}
 
 #btn {
   position: absolute;
@@ -85,11 +81,6 @@ body {
   background-color: rgb(50, 52, 72);
   transform: scale(1.015);
   cursor: pointer;
-}
-
-.submit:disabled {
-  outline: 0.5pt solid rgb(94, 218, 94);
-  color: rgb(94, 218, 94);
 }
 
 #file-div {
@@ -151,4 +142,14 @@ body {
   left: 50%;
   transform: translate(-50%);
   margin-top: 39vh;
+}
+
+.success {
+  outline: 0.5pt solid rgb(94, 218, 94) !important;
+  color: rgb(94, 218, 94) !important;
+}
+
+.failure {
+  outline: 0.5pt solid rgb(202, 72, 72) !important;
+  color: rgb(202, 72, 72) !important;
 }
