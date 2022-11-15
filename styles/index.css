@@ -82,6 +82,11 @@ body {
   background-color: rgb(50, 52, 72);
   transform: scale(1.015);
 }
+
+#file-div {
+  display: none;
+}
+
 #file-text {
   position: absolute;
   left: 50%;

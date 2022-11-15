@@ -10,19 +10,26 @@
     <div id="main">
       <div id="heading-text">PlayInSync</div>
       <div id="link">
-        <input type="text" id="link-input" placeholder="Server URL" />
+        <input type="text" id="link-input" placeholder="Server URL" required />
       </div>
       <div id="btn">
-        <button class="submit">Connect</button>
+        <button class="submit" id="connect">Connect</button>
       </div>
-      <div id="file-text">Pick the file</div>
-      <div id="file-picker">
-        <input type="file" name="" id="file" />
-      </div>
-      <div id="watch">
-        <button class="submit">Watch</button>
+      <div id="file-div">
+        <div id="file-text">Pick the file</div>
+        <div id="file-picker">
+          <input type="file" name="" id="file" />
+        </div>
+        <div id="watch">
+          <a href="./watch">
+            <button class="submit">Play</button>
+          </a>
+        </div>
       </div>
     </div>
   </body>
   <link rel="stylesheet" href="./styles/index.css" />
+  <script src="./lib/fetcher.js"></script>
+  <script src="./lib/eventHandlers.js"></script>
+  <script src="./index.js"></script>
 </html>
