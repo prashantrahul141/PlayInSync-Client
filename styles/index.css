@@ -2,11 +2,9 @@
   --font: 'Courier New', Courier, monospace;
 }
 ::-moz-selection {
-  /* color: rgb(35, 35, 35); */
   background: rgba(230, 230, 230, 0.15);
 }
 ::selection {
-  /* color: rgb(35, 35, 35); */
   background: rgba(230, 230, 230, 0.15);
 }
 
@@ -16,7 +14,7 @@ body {
 
 #main {
   position: absolute;
-  top: 30%;
+  top: 25%;
   left: 50%;
   transform: translate(-50%, -50%);
   margin: 10px;
@@ -58,10 +56,10 @@ body {
   position: absolute;
   left: 50%;
   transform: translate(-50%);
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
-#submit {
+.submit {
   width: 110px;
   height: 40px;
   color: whitesmoke;
@@ -78,8 +76,8 @@ body {
   cursor: pointer;
 }
 
-#submit:hover,
-#submit:active {
+.submit:hover,
+.submit:active {
   outline: 0.5pt solid rgba(163, 163, 196, 0.8);
   background-color: rgb(50, 52, 72);
   transform: scale(1.015);
@@ -88,7 +86,7 @@ body {
   position: absolute;
   left: 50%;
   transform: translate(-50%);
-  margin-top: 27vh;
+  margin-top: 23vh;
   font-size: 1.2rem;
   font-family: var(--font);
   font-weight: 600;
@@ -100,7 +98,7 @@ body {
   position: absolute;
   left: 50%;
   transform: translate(-50%);
-  margin-top: 33vh;
+  margin-top: 29vh;
 }
 
 #file {
@@ -132,4 +130,11 @@ body {
   background-color: rgb(46, 48, 67);
   border: none;
   color: rgb(46, 48, 67);
+}
+
+#watch {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  margin-top: 39vh;
 }
