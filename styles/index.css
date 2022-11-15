@@ -10,6 +10,7 @@
 
 body {
   background-color: rgb(28, 29, 40);
+  overflow: hidden;
 }
 
 #main {
@@ -83,10 +84,6 @@ body {
   cursor: pointer;
 }
 
-#file-div {
-  display: none;
-}
-
 #file-text {
   position: absolute;
   left: 50%;
@@ -144,12 +141,8 @@ body {
   margin-top: 39vh;
 }
 
-.success {
-  outline: 0.5pt solid rgb(94, 218, 94) !important;
-  color: rgb(94, 218, 94) !important;
-}
-
-.failure {
-  outline: 0.5pt solid rgb(202, 72, 72) !important;
-  color: rgb(202, 72, 72) !important;
+#video-player {
+  display: none;
+  height: 100vh;
+  width: 100vw;
 }
