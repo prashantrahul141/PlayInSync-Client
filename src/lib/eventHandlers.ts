@@ -1,6 +1,8 @@
 let CLIENTHASH: any;
-let fileName: string | null;
+let fileName: string;
+let SERVERURL: string;
 
+// connecting to the server.
 const connectHandler = async () => {
   urlInput.disabled = true;
   connectButton.disabled = true;
@@ -35,15 +37,18 @@ const connectHandler = async () => {
   }
 };
 
-const onLoadWatch = () => {
+// handeling first load of /watch page
+const onLoadWatch = async () => {
   CLIENTHASH = localStorage.getItem('CLIENTHASH');
-  fileName = localStorage.getItem('FILENAME');
+  fileName = localStorage.getItem('FILENAME') || 'None';
+  SERVERURL = localStorage.getItem('SERVERURL') || 'http://0.0.0.0:3000';
   if (fileName !== 'None') {
     file_text.innerText += ` ${fileName}`;
   }
 };
 
-const playHandler = (e: Event) => {
+// handeling when sync/play button is pressed
+const playHandler = async (e: Event) => {
   e.preventDefault();
 
   if (file_input.files !== null && file_input.files[0] !== undefined) {
@@ -51,5 +56,57 @@ const playHandler = (e: Event) => {
     videoPlayerDiv.style.display = 'block';
     videoPlayer.src = objectUrl;
     file_div.style.display = 'none';
+
+    const response = await onPlayFetcher();
+    if (response) {
+      videoPlayer.currentTime = response.playbackTime;
+      if (response.playState === true) {
+        videoPlayer.play();
+      }
+      videoPlayer.playbackRate = response.playbackSpeed;
+    }
   }
+};
+
+// handeling play and pause
+let firstLoadPlayPause = true;
+const onPlayPause = async (e: Event) => {
+  if (!firstLoadPlayPause) {
+    // const currentTime_ = videoPlayer.currentTime;
+    await onPlayPauseFetcher();
+    return;
+  }
+  firstLoadPlayPause = false;
+};
+
+// handeling seeks
+let timing = 0;
+let firstLoadOnSeek = true;
+const onSeek = async () => {
+  if (!firstLoadOnSeek) {
+    let previousTime = timing;
+    let currentTime = Math.round(videoPlayer.currentTime);
+    if (currentTime > previousTime + 1 || currentTime < previousTime - 1) {
+      await onSeekFetcher(videoPlayer.currentTime);
+    }
+    timing = currentTime;
+    return;
+  }
+  firstLoadOnSeek = false;
+};
+
+// handeling playbackspeed
+// for somereason idk 'ratechange' event gets
+// called twice, to handel that using 'lastRateChangeCalled'.
+let lastRateChangeCalled = 0;
+let firstLoadOnRateChange = true;
+const onRateChange = async () => {
+  if (!firstLoadOnRateChange) {
+    if (performance.now() - lastRateChangeCalled > 1000) {
+      lastRateChangeCalled = performance.now();
+      await onRateChangeFetcher(videoPlayer.playbackRate);
+    }
+    return;
+  }
+  firstLoadOnRateChange = false;
 };
