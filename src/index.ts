@@ -7,9 +7,14 @@ const playButton = document.getElementById('play') as HTMLButtonElement;
 const videoPlayerDiv = document.getElementById('video-div') as HTMLDivElement;
 const videoPlayer = document.getElementById('video-player') as HTMLVideoElement;
 
-if (document.URL.includes('index')) {
-  connectButton.addEventListener('click', connectHandler);
-} else if (document.URL.includes('watch')) {
+if (document.URL.includes('watch')) {
   onLoadWatch();
   playButton.addEventListener('click', playHandler);
+
+  videoPlayer.addEventListener('pause', onPlayPause);
+  videoPlayer.addEventListener('play', onPlayPause);
+  videoPlayer.addEventListener('timeupdate', onSeek);
+  videoPlayer.addEventListener('ratechange', onRateChange);
+} else {
+  connectButton.addEventListener('click', connectHandler);
 }
