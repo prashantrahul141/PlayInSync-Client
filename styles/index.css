@@ -142,6 +142,9 @@ body {
 }
 #video-div {
   display: none;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
 }
 #video-player {
   height: 85vh;
