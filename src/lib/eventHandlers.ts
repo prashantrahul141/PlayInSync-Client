@@ -15,6 +15,7 @@ const connectHandler = async () => {
       if (response['response']['file'] !== 'None') {
         fileName = response['response']['file'];
         localStorage.setItem('FILENAME', fileName || 'None');
+        localStorage.setItem('SERVERURL', urlInput.value);
       }
       localStorage.setItem('CLIENTHASH', CLIENTHASH);
       window.location.href = './watch.html';
