@@ -1,7 +1,7 @@
 let CLIENTHASH: any;
 let fileName: string;
 let SERVERURL: string;
-let lockDuration = 2000;
+let lockDuration = 1000;
 let lastLocked = -1000;
 
 // get current playback State Local.
@@ -92,17 +92,10 @@ const onPlayPause = async (e: Event) => {
 };
 
 // handeling seeks
-let timing = 0;
 const onSeek = async () => {
   if (performance.now() - lastLocked > lockDuration) {
-    let previousTime = timing;
-    let currentTime = Math.round(videoPlayer.currentTime);
-    if (currentTime > previousTime + 1 || currentTime < previousTime - 1) {
-      const currentVideoState = getPlaybackState();
-      await onSeekFetcher(currentVideoState);
-    }
-    timing = currentTime;
-    return;
+    const currentVideoState = getPlaybackState();
+    await onSeekFetcher(currentVideoState);
   }
 };
 

@@ -12,7 +12,7 @@ if (document.URL.includes('watch')) {
     playButton.addEventListener('click', playHandler);
     videoPlayer.addEventListener('pause', onPlayPause);
     videoPlayer.addEventListener('play', onPlayPause);
-    videoPlayer.addEventListener('timeupdate', onSeek);
+    videoPlayer.addEventListener('seeked', onSeek);
     videoPlayer.addEventListener('ratechange', onRateChange);
 }
 else {
