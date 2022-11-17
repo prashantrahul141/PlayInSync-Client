@@ -12,21 +12,21 @@ Everytime someone changes the state of video playback (play/pause, seek, playbac
 
 Since all clients have the video required to sync even before the sync starts, this removes the hassel of streaming video (which leads to loss in quality and drop in fps)
 
-For server see - https://github.com/prashantrahul141/PlayInSync-Server
+For server see - https://github.com/PlayInSync/PlayInSync-Server
 
 # 🛠️ Installation & Set Up
 
 ##### 1. Clone the repo
 
 ```sh
-git clone https://github.com/prashantrahul141/PlayInSync-Client
+git clone https://github.com/PlayInSync/PlayInSync-Client
 ```
 
 ##### 2. The site is completely static, no need for a local server, just open **index.html**
 
 <img width="100%" src="/media/index.jpg" alt="index.jpg">
 
-##### 3. Put in the [server](https://github.com/prashantrahul141/PlayInSync-Server) URL
+##### 3. Put in the [server](https://github.com/PlayInSync/PlayInSync-Server) URL
 
 <img width="100%" src="/media/connect.jpg" alt="index.jpg">
 
@@ -42,4 +42,3 @@ git clone https://github.com/prashantrahul141/PlayInSync-Client
 # 💻 Technologies used
 
 - TypeScript
-- Express
