@@ -1,11 +1,16 @@
-let CLIENTHASH: any;
-let fileName: string;
+let clientIO: any;
 let SERVERURL: string;
 let lockDuration = 1000;
 let lastLocked = -1000;
 
+type videoStateType = {
+  playState: boolean;
+  playbackTime: number;
+  playbackSpeed: number;
+};
+
 // get current playback State Local.
-const getPlaybackState = (): currentVideoState => {
+const getPlaybackState = (): videoStateType => {
   const playState = !videoPlayer.paused;
   const playbackTime = videoPlayer.currentTime;
   const playbackSpeed = videoPlayer.playbackRate;
@@ -19,43 +24,33 @@ const connectHandler = async () => {
   connectButton.disabled = true;
 
   if (urlInput.value) {
-    // valid url
-    const response = await connectHandlerFetcher();
-    if (response['response']['state'] === 'Success') {
-      // When Response is recieved from server.
-
-      CLIENTHASH = response['clientHash'];
-      if (response['response']['file'] !== 'None') {
-        fileName = response['response']['file'];
-        localStorage.setItem('FILENAME', fileName || 'None');
+    try {
+      const res = await fetch(urlInput.value);
+      if (res) {
+        let response = await res.json();
+        if (response['state'] === 'Success') {
+          localStorage.setItem('SERVERURL', urlInput.value);
+          window.location.href = './watch.html';
+        }
       }
-      localStorage.setItem('SERVERURL', urlInput.value);
-      localStorage.setItem('CLIENTHASH', CLIENTHASH);
-      window.location.href = './watch.html';
-    } else if (response['response']['state'] === 'Failure') {
-      // Server didnt respond.
+    } catch (err) {
       urlInput.disabled = false;
       connectButton.disabled = false;
 
-      alert('Please enter a valid Server URL first.');
+      console.log(err);
+      alert('Failed to connect to the server.');
     }
   } else {
-    // invalid url
     urlInput.disabled = false;
     connectButton.disabled = false;
 
-    alert('Please enter a valid Server URL first.');
+    alert('Please enter a valid server url.');
   }
 };
 
 // handeling first load of /watch page
-const onLoadWatch = async () => {
-  CLIENTHASH = localStorage.getItem('CLIENTHASH');
-  fileName = localStorage.getItem('FILENAME') || 'None';
+const onLoadWatch = () => {
   SERVERURL = localStorage.getItem('SERVERURL') || 'http://0.0.0.0:3000';
-  if (fileName !== 'None') {
-    file_text.innerText += ` ${fileName}`;
-  }
 };
 
 // handeling when sync/play button is pressed
@@ -68,57 +63,25 @@ const playHandler = async (e: Event) => {
     videoPlayer.src = objectUrl;
     file_div.style.display = 'none';
 
-    const response = await onPlayFetcher();
-    if (response) {
-      videoPlayer.currentTime = response.playbackTime;
-      if (response.playState === true) {
-        videoPlayer.play();
-      }
-      videoPlayer.playbackRate = response.playbackSpeed;
-      // listening for changes on the server.
-      setInterval(changeListener, 2000);
-    }
+    // @ts-ignore
+    clientIO = io(SERVERURL);
+    clientIO.on('connect', (socket: any) => {
+      console.log('Connected.');
+    });
+    clientIO.on('recieve-update', onReceiveUpdate);
   }
 };
 
-// handeling play and pause
-
-const onPlayPause = async (e: Event) => {
+const sendUpdate = (e: Event) => {
   if (performance.now() - lastLocked > lockDuration) {
     const currentVideoState = getPlaybackState();
-    await onPlayPauseFetcher(currentVideoState);
-    return;
+    clientIO.emit('update', currentVideoState);
   }
 };
 
-// handeling seeks
-const onSeek = async () => {
-  if (performance.now() - lastLocked > lockDuration) {
-    const currentVideoState = getPlaybackState();
-    await onSeekFetcher(currentVideoState);
-  }
-};
-
-// handeling playbackspeed
-// for somereason idk 'ratechange' event gets
-// called twice, to handel that using 'lastRateChangeCalled'.
-let firstLoadOnRateChange = true;
-const onRateChange = async () => {
-  if (!firstLoadOnRateChange && performance.now() - lastLocked > lockDuration) {
-    const currentVideoState = getPlaybackState();
-    await onRateChangeFetcher(currentVideoState);
-    return;
-  }
-  firstLoadOnRateChange = false;
-};
-
-// listens for changes
-const changeListener = async () => {
-  const res = await changeListenerFetcher();
-  if (res.changed) {
-    lastLocked = performance.now();
-    videoPlayer.currentTime = res.playbackTime;
-    videoPlayer.playbackRate = res.playbackSpeed;
-  }
-  res.playState ? videoPlayer.play() : videoPlayer.pause();
+const onReceiveUpdate = (playbackState: videoStateType) => {
+  lastLocked = performance.now();
+  videoPlayer.currentTime = playbackState.playbackTime;
+  videoPlayer.playbackRate = playbackState.playbackSpeed;
+  playbackState.playState ? videoPlayer.play() : videoPlayer.pause();
 };

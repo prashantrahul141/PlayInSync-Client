@@ -10,10 +10,10 @@ const videoPlayer = document.getElementById('video-player');
 if (document.URL.includes('watch')) {
     onLoadWatch();
     playButton.addEventListener('click', playHandler);
-    videoPlayer.addEventListener('pause', onPlayPause);
-    videoPlayer.addEventListener('play', onPlayPause);
-    videoPlayer.addEventListener('seeked', onSeek);
-    videoPlayer.addEventListener('ratechange', onRateChange);
+    videoPlayer.addEventListener('pause', sendUpdate);
+    videoPlayer.addEventListener('play', sendUpdate);
+    videoPlayer.addEventListener('seeked', sendUpdate);
+    videoPlayer.addEventListener('ratechange', sendUpdate);
 }
 else {
     connectButton.addEventListener('click', connectHandler);
