@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/prashantrahul141/PlayInSync-Client.git"
+    "url": "git+https://github.com/PlayInSync/PlayInSync-Client.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/prashantrahul141/PlayInSync-Client/issues"
+    "url": "https://github.com/PlayInSync/PlayInSync-Client/issues"
   },
-  "homepage": "https://github.com/prashantrahul141/PlayInSync-Client#readme"
+  "homepage": "https://github.com/PlayInSync/PlayInSync-Client#readme"
 }

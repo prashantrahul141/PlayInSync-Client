@@ -2,7 +2,7 @@
 
 # Client Code for PlayInSync
 
-This contains the client code for PlayInSync written in TypeScript, Any changes made on the client (videoplayback) will be sent to the server and synced with all other clients.
+This contains the client code for PlayInSync written in TypeScript using Socket.io, Any changes made on the client (videoplayback) will be sent to the server and synced with all other clients.
 
 ### How?
 
@@ -42,3 +42,4 @@ git clone https://github.com/PlayInSync/PlayInSync-Client
 # 💻 Technologies used
 
 - TypeScript
+- Socket.io
