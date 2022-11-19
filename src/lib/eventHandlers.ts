@@ -30,7 +30,7 @@ const connectHandler = async () => {
         let response = await res.json();
         if (response['state'] === 'Success') {
           localStorage.setItem('SERVERURL', urlInput.value);
-          window.location.href = './watch.html';
+          window.location.href = `./watch.html?SERVERURL=${urlInput.value}`;
         }
       }
     } catch (err) {
@@ -50,8 +50,13 @@ const connectHandler = async () => {
 
 // handeling first load of /watch page
 const onLoadWatch = () => {
-  SERVERURL = localStorage.getItem('SERVERURL') || 'http://0.0.0.0:3000';
+  const queryParams = new URLSearchParams(window.location.search);
+  SERVERURL =
+    localStorage.getItem('SERVERURL') ||
+    queryParams.get('SERVERURL') ||
+    'http://0.0.0.0:3000';
 };
+
 
 // handeling when sync/play button is pressed
 const playHandler = async (e: Event) => {
